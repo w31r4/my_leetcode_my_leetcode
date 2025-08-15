@@ -1,0 +1,12 @@
+{
+    "go.enableCodeLens": {
+        "runtest": false
+    },
+    "cSpell.words": [
+        "barthefoo",
+        "foobarthe",
+        "inorder",
+        "maxwidth",
+        "postorder"
+    ]
+}
