@@ -32,7 +32,7 @@ type WordDictionary struct {
 	trieRoot *wordNode
 }
 
-func Constructor() WordDictionary {
+func constructor1() WordDictionary {
 	return WordDictionary{&wordNode{}}
 }
 
