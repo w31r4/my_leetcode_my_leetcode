@@ -34,7 +34,7 @@ type BSTIterator struct {
 // 一个一个取出存储好的元素
 // 节约空间思路：用栈模拟中序遍历：先找到左子树底 (一定是整棵树最小的)，并把路径上的所有节点入栈
 // 当 next 时，出栈栈顶元素，它一定是最小的，判断栈顶元素是否存在 right(right 一定比 node 大),如果存在将其入栈并遍历至 right 的 left 底部，该底部为除当前节点最小值
-func Constructor(root *TreeNode) BSTIterator {
+func Constructor5(root *TreeNode) BSTIterator {
 	// var bstQueue []int
 	// var midDfs func(node *TreeNode)
 	// midDfs = func(node *TreeNode) {
