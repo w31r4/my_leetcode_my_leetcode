@@ -23,7 +23,6 @@ func constructTrie() letterTrie {
 	return letterTrie{
 		&letterNode{
 			[26]*letterNode{},
-			// false,
 			-1,
 		},
 	}
@@ -66,19 +65,23 @@ func findWords(board [][]byte, words []string) (answer []string) {
 			return
 		}
 		ch := board[i][j] - 'a'
+		//当前被查找字符
 		if letter.child[ch] != nil {
 			visited[i][j] = true
 
 			if letter.child[ch].wordNum != -1 {
 				answer = append(answer, words[letter.child[ch].wordNum])
+				//当前子节点存在被查找字符，且被查找子节点是一个单词的尾部，那么增加一个被查找到的字符
 				letter.child[ch].wordNum = -1
-				//防止重复
+				//防止重复，将 wordNum 设置为 -1
 			}
 			dfs(i+1, j, letter.child[ch])
 			dfs(i-1, j, letter.child[ch])
 			dfs(i, j+1, letter.child[ch])
 			dfs(i, j-1, letter.child[ch])
+			//查找上下左右四个邻接节点
 			visited[i][j] = false
+			//当该层中所有子节点已查找完毕，将 visited 回溯
 
 		}
 
@@ -90,6 +93,7 @@ func findWords(board [][]byte, words []string) (answer []string) {
 		for j := 0; j < rowLen; j++ {
 			//第几列
 			dfs(i, j, letterTrie.root)
+			//从 root 开始查找
 		}
 	}
 	return
