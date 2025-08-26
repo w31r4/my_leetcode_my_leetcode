@@ -39,6 +39,7 @@ func permute(nums []int) (answer [][]int) {
 				visited[i] = true
 				dfs(level + 1)
 				visited[i] = false
+				//回溯 visited，为下一轮循环做准备
 			}
 		}
 	}
