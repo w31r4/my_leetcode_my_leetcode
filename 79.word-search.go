@@ -58,34 +58,50 @@ func reverseStringRunes(s string) string {
 	return string(runes)
 }
 func exist(board [][]byte, word string) (answer bool) {
+	// --- 预处理与优化阶段 ---
+
+	// 1. 统计棋盘（供应）和单词（需求）的字符频率。
 	boardCounts := getBoardLetterTimes(board)
 	wordCounts := getWordLetterTimes(word)
-	for i, v := range boardCounts {
-		if wordCounts[i] > v {
-			return
+
+	// 2.【优化点 1: 快速拒绝】
+	// 思想：如果棋盘上的某个字符数量，连单词所需要的都满足不了，
+	// 那么绝对不可能拼出这个单词，可以直接返回 false，避免无效的搜索。
+	for i := 0; i < 52; i++ {
+		if wordCounts[i] > boardCounts[i] {
+			return false // 使用 return, 因为函数定义了 answer 默认为 false
 		}
 	}
-	var firstLetterNum, lastLetterNum int
+
+	// 3.【优化点 2: 启发式搜索方向】
+	// 思想：深度优先搜索的开销很大。我们应该从棋盘上更稀有的字母开始搜索，
+	// 这样可以大幅减少启动 DFS 的次数。
 	length := len(word)
+	var firstLetterCount, lastLetterCount int
 
-	if word[0] >= 'a' && word[0] <= 'z' {
-		// It's a lowercase letter, map to 0-25
-		firstLetterNum = int(word[0] - 'a')
-	} else if word[0] >= 'A' && word[0] <= 'Z' {
-		// It's an uppercase letter, map to 26-51
-		firstLetterNum = int(word[0]-'A') + 26
+	// 获取首字母在棋盘上的数量
+	firstChar := word[0]
+	if firstChar >= 'a' && firstChar <= 'z' {
+		firstLetterCount = boardCounts[firstChar-'a']
+	} else {
+		firstLetterCount = boardCounts[firstChar-'A'+26]
 	}
 
-	if word[length-1] >= 'a' && word[length-1] <= 'z' {
-		// It's a lowercase letter, map to length-1-25
-		lastLetterNum = int(word[length-1] - 'a')
-	} else if word[length-1] >= 'A' && word[length-1] <= 'Z' {
-		// It's an uppercase letter, map to 26-51
-		lastLetterNum = int(word[length-1]-'A') + 26
+	// 获取尾字母在棋盘上的数量
+	lastChar := word[length-1]
+	if lastChar >= 'a' && lastChar <= 'z' {
+		lastLetterCount = boardCounts[lastChar-'a']
+	} else {
+		lastLetterCount = boardCounts[lastChar-'A'+26]
 	}
-	if boardCounts[firstLetterNum] > boardCounts[lastLetterNum] {
+
+	// 核心决策：如果首字母比尾字母更常见，就反转单词，从更稀有的尾字母开始搜。
+	if firstLetterCount > lastLetterCount {
 		word = reverseStringRunes(word)
 	}
+	//以上是关于提高效率的优化
+	//下面是核心搜索代码
+	//一段带回溯性 visited 的 dfs 遍历
 	visited := make([][]bool, len(board))
 	m := len(board)
 	n := len(board[0])
