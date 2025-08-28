@@ -10,7 +10,7 @@ package leetcode
 
 // @lcpr-template-end
 // @lc code=start
-type Node struct {
+type Node1 struct {
 	Val       int
 	Neighbors []*Node
 }

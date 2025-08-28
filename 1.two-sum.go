@@ -61,6 +61,19 @@
 // @lcpr-template-start
 package leetcode
 
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+type Node struct {
+	Val         bool
+	IsLeaf      bool
+	TopLeft     *Node
+	TopRight    *Node
+	BottomLeft  *Node
+	BottomRight *Node
+}
+
 // @lcpr-template-end
 // @lc code=start
 func twoSum1(nums []int, target int) []int {
