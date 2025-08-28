@@ -38,10 +38,10 @@ package leetcode
 //   - 将返回的四个子节点连接到当前内部节点的四个孩子指针上，然后返回这个内部节点。
 //
 // 主函数 `construct` 的作用就是启动整个过程，它对整个 grid (从 (0,0) 开始，边长为 n) 调用一次 `buildTree`。
-func construct(grid [][]int) *Node {
+func construct(grid [][]int) *Node2 {
 	length := len(grid)
-	var buildTree func(int, int, int) *Node
-	buildTree = func(size, row, col int) *Node {
+	var buildTree func(int, int, int) *Node2
+	buildTree = func(size, row, col int) *Node2 {
 		val := grid[row][col]
 
 		isPure := true
@@ -61,11 +61,11 @@ func construct(grid [][]int) *Node {
 			if val == 0 {
 				valBool = false
 			}
-			return &Node{Val: valBool, IsLeaf: true}
+			return &Node2{Val: valBool, IsLeaf: true}
 		}
 		//当区域内非纯色时开始递归四等分小方格
 		halfSize := size / 2
-		node := &Node{Val: true, IsLeaf: false}
+		node := &Node2{Val: true, IsLeaf: false}
 		node.TopLeft = buildTree(halfSize, row, col)
 		node.TopRight = buildTree(halfSize, row, col+halfSize)
 		node.BottomLeft = buildTree(halfSize, row+halfSize, col)

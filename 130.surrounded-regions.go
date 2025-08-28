@@ -12,7 +12,7 @@ package leetcode
 // @lc code=start
 type Node1 struct {
 	Val       int
-	Neighbors []*Node
+	Neighbors []*Node2
 }
 
 // 后序遍历，当遍历完所有的 o 还没有遇到边界时，将所有的 o 转化为 x

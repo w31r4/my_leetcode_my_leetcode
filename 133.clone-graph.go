@@ -34,17 +34,17 @@ package leetcode
 // }
 
 // 需要
-func cloneGraph(node *Node) *Node {
+func cloneGraph(node *Node2) *Node2 {
 	if node == nil {
 		return nil
 	}
-	cloneMap := map[int]*Node{}
-	var getCloneNodeDfs func(originalNode *Node) *Node // 声明 dfs 辅助函数
-	getCloneNodeDfs = func(originalNode *Node) *Node {
+	cloneMap := map[int]*Node2{}
+	var getCloneNodeDfs func(originalNode *Node2) *Node2 // 声明 dfs 辅助函数
+	getCloneNodeDfs = func(originalNode *Node2) *Node2 {
 		if clonedNode, ok := cloneMap[originalNode.Val]; ok {
 			return clonedNode
 		}
-		cloneNode := &Node{Val: originalNode.Val, Neighbors: []*Node{}}
+		cloneNode := &Node2{Val: originalNode.Val, Neighbors: []*Node2{}}
 		cloneMap[originalNode.Val] = cloneNode
 		for _, neighbor := range originalNode.Neighbors {
 			cloneNode.Neighbors = append(cloneNode.Neighbors, getCloneNodeDfs(neighbor))

@@ -133,10 +133,10 @@ package leetcode
 //	}
 //
 // 使用链表来记录下一级的状态而非队列，换一个保存数据的数据结构
-func connect(root *Node) *Node {
+func connect(root *Node2) *Node2 {
 	cur := root
-	dummy := &Node{}
-	var nxt *Node
+	dummy := &Node2{}
+	var nxt *Node2
 	for cur != nil {
 		dummy.Next = nil
 		nxt = dummy

@@ -66,12 +66,16 @@ type ListNode struct {
 	Next *ListNode
 }
 type Node struct {
+	Val  int
+	Next *Node
+}
+type Node2 struct {
 	Val         bool
 	IsLeaf      bool
-	TopLeft     *Node
-	TopRight    *Node
-	BottomLeft  *Node
-	BottomRight *Node
+	TopLeft     *Node2
+	TopRight    *Node2
+	BottomLeft  *Node2
+	BottomRight *Node2
 }
 
 // @lcpr-template-end

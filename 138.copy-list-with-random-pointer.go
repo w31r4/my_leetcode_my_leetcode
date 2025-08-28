@@ -31,10 +31,10 @@ package leetcode
 // 第三次分离复制前链表和复制后链表
 // 不要一边赋值 random 一遍分离链表，链表的 random 赋值操作需要保持链表整体保持不变，如果改变了的话那么 random 指向的值将不会是预期的值
 // 分离两个链表会修改节点.Next，导致 copyNode.Random = lastRandom.Next 语句产生歧义，无法实现目标功能
-func copyRandomList(head *Node) *Node {
+func copyRandomList(head *Node2) *Node2 {
 	recordHead := head
 	for head != nil {
-		newNode := &Node{head.Val, head.Next, nil}
+		newNode := &Node2{head.Val, head.Next, nil}
 		head.Next = newNode
 		head = newNode.Next
 	}
@@ -61,7 +61,7 @@ func copyRandomList(head *Node) *Node {
 		currentNode = copyNode.Next
 		//配置 copy 后的 random
 	}
-	var ans, ansHead *Node
+	var ans, ansHead *Node2
 	isFirstTime := true
 	originHead := recordHead
 	for originHead != nil {
