@@ -25,27 +25,32 @@ func mergeKLists(lists []*ListNode) *ListNode {
 	if len(lists) == 1 {
 		return lists[0]
 	}
-	dyingListHead := lists[0]
-	mergedListHead := lists[1]
+	length := len(lists)
+	halfLength := length / 2
+	leftLists := lists[:halfLength]
+	rightLists := lists[halfLength:]
+	return mergeList(mergeKLists(leftLists), mergeKLists(rightLists))
+}
+func mergeList(node1, node2 *ListNode) *ListNode {
+
 	dummy := &ListNode{}
 	tail := dummy
-	for mergedListHead != nil && dyingListHead != nil {
-		if dyingListHead.Val > mergedListHead.Val {
-			tail.Next = mergedListHead
-			mergedListHead = mergedListHead.Next
+	for node2 != nil && node1 != nil {
+		if node1.Val > node2.Val {
+			tail.Next = node2
+			node2 = node2.Next
 		} else {
-			tail.Next = dyingListHead
-			dyingListHead = dyingListHead.Next
+			tail.Next = node1
+			node1 = node1.Next
 		}
 		tail = tail.Next
 	}
-	if mergedListHead == nil {
-		tail.Next = dyingListHead
+	if node2 == nil {
+		tail.Next = node1
 	} else {
-		tail.Next = mergedListHead
+		tail.Next = node2
 	}
-	lists[1] = dummy.Next
-	return mergeKLists(lists[1:])
+	return dummy.Next
 }
 
 // @lc code=end

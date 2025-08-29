@@ -35,9 +35,9 @@ func sortList(head *ListNode) *ListNode {
 
 	left := sortList(head)
 	right := sortList(slow)
-	return mergeList(left, right)
+	return mergeList1(left, right)
 }
-func mergeList(leftNode, rightNode *ListNode) *ListNode {
+func mergeList1(leftNode, rightNode *ListNode) *ListNode {
 	dummy := &ListNode{}
 	tail := dummy
 	for rightNode != nil && leftNode != nil {
