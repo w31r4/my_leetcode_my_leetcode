@@ -30,14 +30,12 @@ func maxSubarraySumCircular(nums []int) (answer int) {
 	maxSubSum := 0
 	preSubSum := 0
 	maxOrigin := nums[0]
+	sum := 0
 	for _, val := range nums {
 		maxSubSum = max(preSubSum+val, val)
 		preSubSum = maxSubSum
 		maxOrigin = max(maxOrigin, maxSubSum)
-	}
-	sum := 0
-	for _, v := range nums {
-		sum += v
+		sum += val
 	}
 	minSubSum := 0
 	preMinSum := 0
