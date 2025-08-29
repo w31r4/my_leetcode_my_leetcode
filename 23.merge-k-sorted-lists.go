@@ -19,6 +19,9 @@ package leetcode
  */
 func mergeKLists(lists []*ListNode) *ListNode {
 	// 这题最简单的思路就是单纯的的遍历
+	//简单遍历是线性提升时间复杂度 N*k，一次只能排序一个
+	//可以二分分治让查找更加均匀，减少排序次数
+	//一次排序两个链表
 	if len(lists) == 0 {
 		return nil
 	}
