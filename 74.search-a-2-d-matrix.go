@@ -16,6 +16,8 @@ func searchMatrix(matrix [][]int, target int) bool {
 	lastNumIndex := col - 1
 	targetRow := -1
 	for i := 0; i < row; i++ {
+		// if matrix[i][0] >= target && matrix[i][lastNumIndex] <= target
+
 		if target >= matrix[i][0] && matrix[i][lastNumIndex] >= target {
 			//傻逼了，今天老是写反大小比较
 			targetRow = i
