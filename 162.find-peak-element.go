@@ -8,8 +8,6 @@
 // @lcpr-template-start
 package leetcode
 
-import "math"
-
 // @lcpr-template-end
 // @lc code=start
 // 数字的排列除了目标状态有三种情况：
@@ -26,52 +24,93 @@ func findPeakElement(nums []int) int {
 	start := 0
 	length := len(nums)
 	end := length - 1
-	mid := start + (end-start)/2
-	midNum := nums[mid]
-	leftNum := 0
-	if mid-1 == -1 {
-		leftNum = math.MinInt
-	} else {
-		leftNum = nums[mid-1]
-	}
-
-	rightNum := 0
-	if mid+1 == length {
-		rightNum = math.MinInt
-	} else {
-		rightNum = nums[mid+1]
-	}
-	for midNum < rightNum || midNum < leftNum {
-		if midNum < rightNum {
+	mid := 0
+	// leftNum := 0
+	// rightNum := 0
+	//继续优雅化
+	//由于向下取整的原因，所以我们的 mid 在双数时是偏小的
+	// length=2,mid=0
+	for start < end {
+		mid = start + (end-start)/2
+		if nums[mid] < nums[mid+1] {
 			start = mid + 1
-			mid = start + (end-start)/2
-			midNum = nums[mid]
-			if mid-1 == -1 {
-				leftNum = math.MinInt
-			} else {
-				leftNum = nums[mid-1]
-			}
-			if mid+1 == length {
-				rightNum = math.MinInt
-			} else {
-				rightNum = nums[mid+1]
-			}
 		} else {
-			end = mid - 1
-			mid = start + (end-start)/2
-			midNum = nums[mid]
-			if mid-1 == -1 {
-				leftNum = math.MinInt
-			} else {
-				leftNum = nums[mid-1]
-			}
-			if mid+1 == length {
-				rightNum = math.MinInt
-			} else {
-				rightNum = nums[mid+1]
-			}
+			end = mid
 		}
 	}
+	// 	现在我们来解答你的“奇怪的感觉”。
+	// 在模板二（我们现在这个）里，end = mid 这个操作的含义是：
+	// “mid 这个位置有可能是答案，我们不能把它丢掉。所以，我们把搜索区间的右边界收缩到 mid，新的搜索区间是 [start, mid]。”
+	// 而 start = mid + 1 的含义是：
+	// “我们已经确定 mid 不是答案（因为 mid+1 比它大），所以我们可以放心地把它丢掉，从它的下一位 mid+1 开始新的搜索。”
+	// 这个模板的精髓在于，循环的每一步都保证了峰值一定存在于 [start, end] 这个闭区间内。当循环结束时，start 和 end 相遇，start == end，区间里只剩下一个元素，而我们又能保证峰值一定在这个区间里，所以剩下的那个元素就必然是峰值。
+	//二分查找的 +1 是因为可以确定接下来的结果不包含这个数
+	//不加一是因为不确定包不包含这个数
+	// for start <= end {
+	// 	mid = start + (end-start)/2
+	// 	midNum := nums[mid]
+	// 	if mid-1 == -1 {
+	// 		leftNum = math.MinInt
+	// 	} else {
+	// 		leftNum = nums[mid-1]
+	// 	}
+	// 	if mid+1 == length {
+	// 		rightNum = math.MinInt
+	// 	} else {
+	// 		rightNum = nums[mid+1]
+	// 	}
+	// 	if rightNum > midNum {
+	// 		start = mid + 1
+	// 		continue
+	// 	}
+	// 	if leftNum > midNum {
+	// 		end = mid - 1
+	// 		continue
+	// 	}
+	// 	break
+	// }
+	// if mid-1 == -1 {
+	// 	leftNum = math.MinInt
+	// } else {
+	// 	leftNum = nums[mid-1]
+	// }
+
+	// if mid+1 == length {
+	// 	rightNum = math.MinInt
+	// } else {
+	// 	rightNum = nums[mid+1]
+	// }
+	// for midNum < rightNum || midNum < leftNum {
+	// 	if midNum < rightNum {
+	// 		start = mid + 1
+	// 		mid = start + (end-start)/2
+	// 		midNum = nums[mid]
+	// 		if mid-1 == -1 {
+	// 			leftNum = math.MinInt
+	// 		} else {
+	// 			leftNum = nums[mid-1]
+	// 		}
+	// 		if mid+1 == length {
+	// 			rightNum = math.MinInt
+	// 		} else {
+	// 			rightNum = nums[mid+1]
+	// 		}
+	// 	} else {
+	// 		end = mid - 1
+	// 		mid = start + (end-start)/2
+	// 		midNum = nums[mid]
+	// 		if mid-1 == -1 {
+	// 			leftNum = math.MinInt
+	// 		} else {
+	// 			leftNum = nums[mid-1]
+	// 		}
+	// 		if mid+1 == length {
+	// 			rightNum = math.MinInt
+	// 		} else {
+	// 			rightNum = nums[mid+1]
+	// 		}
+	// 	}
+	// }
 	// isFound := false
 	// var dfs func(int)
 	// answer := 0
@@ -116,7 +155,7 @@ func findPeakElement(nums []int) int {
 	// }
 	// dfs(mid)
 	//愚蠢的解法
-	return mid
+	return start
 }
 
 // @lc code=end
