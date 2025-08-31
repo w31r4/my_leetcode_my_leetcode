@@ -24,24 +24,29 @@ func search(nums []int, target int) int {
 	left := 0
 	mid := 0
 	firstMidNum := 0
-	isLeft := false
+	isRight := false
 	//我们先来预处理
 	if target < nums[left] {
+		//比开头小的，可能在右侧
 		if target <= nums[right-1] {
+			//如果确实小于等于结尾，那么确实在右侧
 			firstMidNum = nums[right-1]
-			isLeft = true
+			//剩下的属于左侧的数字都比右侧最大数字要大
+			//后续遇到比这个数大的数就左截断
+			isRight = true
 		} else {
 			return -1
 		}
-		//后续遇到比这个数大的数就左截断
 	} else {
 		//这里是 target 大于等于开头数字
+		//那么一定在左侧
+		//属于右侧的数字一定比左侧最小的数字要小
 		firstMidNum = nums[left]
 		//后续遇到比这个数小的数就右截断
 	}
 	for left < right {
 		mid = left + (right-left)/2
-		if isLeft {
+		if isRight {
 			if nums[mid] > firstMidNum {
 				left = mid + 1
 				continue
